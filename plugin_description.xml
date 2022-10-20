@@ -1,0 +1,10 @@
+<library path="ground_image">
+    <class
+        name="ground_image/GroundImageDisplay"
+        type="ground_image::GroundImageDisplay"
+        base_class_type="rviz_common::Display">
+        <description>
+            Displays a static image on the ground.
+        </description>
+    </class>
+</library>
