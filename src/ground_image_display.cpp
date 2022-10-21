@@ -37,6 +37,7 @@ namespace ground_image
         setupScreenRectangle();
         object_node_ = scene_node_->createChildSceneNode();
         object_node_->attachObject(screen_rect_);
+        updateImageAndDimensions();
     }
 
     void StaticGroundImage::reset()
@@ -49,7 +50,6 @@ namespace ground_image
         (void) dt;
         (void) ros_dt;
 
-
         std::string frame = frame_property_->getFrameStd();
 
         Ogre::Vector3 position;
@@ -59,28 +59,63 @@ namespace ground_image
             RVIZ_COMMON_LOG_ERROR_STREAM("Error transforming from frame '" << frame << "' to frame '"
                                                                            << context_->getFrameManager()->getFixedFrame()
                                                                            << "'");
-            scene_node_->setVisible(false);
+            setStatus(rviz_common::properties::StatusProperty::Error,
+                      "Transform",
+                      QString("Error transforming from frame '%1' to frame '%2'").arg(
+                              QString::fromStdString(frame),
+                              QString::fromStdString(context_->getFrameManager()->getFixedFrame())
+                              )
+                      );
+
+            object_node_->setVisible(false);
 
             return;
         }
 
+        setStatus(rviz_common::properties::StatusProperty::Ok, "Transform", "Transform OK");
+
         scene_node_->setPosition(position);
         scene_node_->setOrientation(orientation);
 
-        scene_node_->setVisible(true);
+        if(image_loaded_){
+            object_node_->setVisible(true);
+        } else {
+            object_node_->setVisible(false);
+        }
     }
 
     void StaticGroundImage::updateImageAndDimensions()
     {
+        image_loaded_ = false;
         std::string image_path = image_path_property_->getStdString();
+
+        if (image_path.empty()) {
+            RVIZ_COMMON_LOG_ERROR_STREAM("No image path specified");
+
+            setStatus(rviz_common::properties::StatusProperty::Error,
+                      "Image",
+                      "No image path specified");
+
+            object_node_->setVisible(false);
+
+            return;
+        }
 
         const bool loaded_correctly = texture_->loadImageFromPath(image_path);
 
         if (!loaded_correctly) {
             RVIZ_COMMON_LOG_ERROR_STREAM("Could not load image from path: " << image_path);
-            scene_node_->setVisible(false);
+
+            setStatus(rviz_common::properties::StatusProperty::Error,
+                      "Image",
+                      QString("Could not load image from given path"));
+
+            object_node_->setVisible(false);
             return;
         }
+
+        setStatus(rviz_common::properties::StatusProperty::Ok, "Image", "Image OK");
+        image_loaded_ = true;
 
         // get the width and height of the image
         float width = width_property_->getFloat();
@@ -148,11 +183,9 @@ namespace ground_image
 
         Ogre::TextureUnitState * tu =  material_->getTechniques()[0]->getPass(0)->createTextureUnitState();
         tu->setTextureName(texture_->getName());
-        tu->setTextureFiltering(Ogre::TFO_NONE);
 
         tu->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
         tu->setTextureFiltering(Ogre::FO_POINT, Ogre::FO_LINEAR, Ogre::FO_NONE);
-//        tu->setColourOperation(Ogre::LBO_REPLACE);
 
         material_->getTechniques()[0]->setLightingEnabled(true);
 
@@ -177,8 +210,6 @@ namespace ground_image
 
         material_->setCullingMode(Ogre::CULL_NONE);
     }
-
-
 }  // namespace displays
 
 

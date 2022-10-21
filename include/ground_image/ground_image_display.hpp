@@ -43,6 +43,7 @@ namespace ground_image
 
     std::unique_ptr<StaticImageTexture> texture_;
     Ogre::ManualObject * screen_rect_;
+    bool image_loaded_ = false;
 
     Ogre::SceneNode * object_node_;
     Ogre::MaterialPtr material_;
