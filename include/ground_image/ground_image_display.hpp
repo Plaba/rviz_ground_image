@@ -18,14 +18,14 @@
 
 namespace ground_image
 {
-    class RVIZ_DEFAULT_PLUGINS_PUBLIC GroundImageDisplay: public rviz_common::Display
+    class RVIZ_DEFAULT_PLUGINS_PUBLIC StaticGroundImage: public rviz_common::Display
 {
     Q_OBJECT
 
     public:
-    explicit GroundImageDisplay(rviz_common::DisplayContext * context);
+    explicit StaticGroundImage(rviz_common::DisplayContext * context);
 
-    GroundImageDisplay();
+    StaticGroundImage();
 
     protected:
 

@@ -18,34 +18,33 @@
 
 namespace ground_image
 {
-    GroundImageDisplay::GroundImageDisplay(rviz_common::DisplayContext * context)
-    : GroundImageDisplay()
+    StaticGroundImage::StaticGroundImage(rviz_common::DisplayContext * context)
+    : StaticGroundImage()
     {
         context_ = context;
         scene_manager_ = context_->getSceneManager();
         scene_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
-
     }
 
-    GroundImageDisplay::GroundImageDisplay()
+    StaticGroundImage::StaticGroundImage()
     {
         texture_ = std::make_unique<StaticImageTexture>();
         setupProperties();
     }
 
-    void GroundImageDisplay::onInitialize() {
+    void StaticGroundImage::onInitialize() {
         frame_property_->setFrameManager(context_->getFrameManager());
         setupScreenRectangle();
         object_node_ = scene_node_->createChildSceneNode();
         object_node_->attachObject(screen_rect_);
     }
 
-    void GroundImageDisplay::reset()
+    void StaticGroundImage::reset()
     {
         texture_->clear();
     }
 
-    void GroundImageDisplay::update(float dt, float ros_dt)
+    void StaticGroundImage::update(float dt, float ros_dt)
     {
         (void) dt;
         (void) ros_dt;
@@ -71,7 +70,7 @@ namespace ground_image
         scene_node_->setVisible(true);
     }
 
-    void GroundImageDisplay::updateImageAndDimensions()
+    void StaticGroundImage::updateImageAndDimensions()
     {
         std::string image_path = image_path_property_->getStdString();
 
@@ -104,7 +103,7 @@ namespace ground_image
 
     }
 
-    void GroundImageDisplay::setupProperties()
+    void StaticGroundImage::setupProperties()
     {
         image_path_property_ = new rviz_common::properties::StringProperty(
             "Image Path", "",
@@ -131,7 +130,7 @@ namespace ground_image
         height_property_->setMin(0.0);
     }
 
-    void GroundImageDisplay::setupScreenRectangle()
+    void StaticGroundImage::setupScreenRectangle()
     {
         RVIZ_COMMON_LOG_INFO("setting up screen rectangle");
 
@@ -184,4 +183,4 @@ namespace ground_image
 
 
 #include <pluginlib/class_list_macros.hpp>  // NOLINT
-PLUGINLIB_EXPORT_CLASS(ground_image::GroundImageDisplay, rviz_common::Display)
+PLUGINLIB_EXPORT_CLASS(ground_image::StaticGroundImage, rviz_common::Display)
