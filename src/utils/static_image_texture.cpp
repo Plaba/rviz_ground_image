@@ -1,10 +1,10 @@
-#include "ground_image/utils/static_image_texture.hpp"
+#include "rviz_ground_image/utils/static_image_texture.hpp"
 
 #include "rviz_default_plugins/displays/image/ros_image_texture.hpp"
 #include <OgreDataStream.h>
 
 
-namespace ground_image{
+namespace rviz_ground_image{
 StaticImageTexture::StaticImageTexture()
 : rviz_default_plugins::displays::ROSImageTexture()
 {
@@ -40,4 +40,4 @@ bool StaticImageTexture::loadImageFromPath(std::string & image_path) {
 bool StaticImageTexture::update() {
     return loadImageFromPath(image_path_);
 }
-} // namespace ground_image
+} // namespace rviz_ground_image

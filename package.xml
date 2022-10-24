@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>ground_image</name>
+  <name>rviz_ground_image</name>
   <version>0.0.1</version>
   <description>A simple RVIZ plugin to display a static image from a file</description>
   <maintainer email="plaba417@students.bju.edu">Peter Labadorf</maintainer>

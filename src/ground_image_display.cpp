@@ -1,4 +1,4 @@
-#include "ground_image/ground_image_display.hpp"
+#include "rviz_ground_image/ground_image_display.hpp"
 
 #include <deque>
 #include <string>
@@ -16,7 +16,7 @@
 #include "rviz_rendering/material_manager.hpp"
 
 
-namespace ground_image
+namespace rviz_ground_image
 {
     StaticGroundImage::StaticGroundImage(rviz_common::DisplayContext * context)
     : StaticGroundImage()
@@ -208,10 +208,13 @@ namespace ground_image
         screen_rect_->normal(0, 0, 1);
         screen_rect_->end();
 
+        screen_rect_->setCastShadows(false);
+        screen_rect_->setRenderQueueGroup(Ogre::RENDER_QUEUE_1);
+
         material_->setCullingMode(Ogre::CULL_NONE);
     }
 }  // namespace displays
 
 
 #include <pluginlib/class_list_macros.hpp>  // NOLINT
-PLUGINLIB_EXPORT_CLASS(ground_image::StaticGroundImage, rviz_common::Display)
+PLUGINLIB_EXPORT_CLASS(rviz_ground_image::StaticGroundImage, rviz_common::Display)

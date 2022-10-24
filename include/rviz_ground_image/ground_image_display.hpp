@@ -3,7 +3,7 @@
 
 #include <QtCore>  // NOLINT
 
-#include "ground_image/utils/static_image_texture.hpp"
+#include "rviz_ground_image/utils/static_image_texture.hpp"
 
 #include "rviz_common/message_filter_display.hpp"
 #include "rviz_common/properties/property.hpp"
@@ -16,7 +16,7 @@
 #include "rviz_rendering/render_window.hpp"
 #include <OgreManualObject.h>
 
-namespace ground_image
+namespace rviz_ground_image
 {
     class RVIZ_DEFAULT_PLUGINS_PUBLIC StaticGroundImage: public rviz_common::Display
 {
