@@ -55,5 +55,5 @@
     <build_type>ament_cmake</build_type>
   </export>
 
-  <exec_depend>rviz</exec_depend>
+  <exec_depend>rviz2</exec_depend>
 </package>
